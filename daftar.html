@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Seminarku - Form Pendaftaran</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="project.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="hal1.html">SEMINARKU</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="hal1.html">HOME</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="daftar.html">DAFTAR</a></li>
+                    <li class="nav-item"><a class="nav-link" href="kontak.html">KONTAK</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container my-5">
+
+        <div class="row justify-content-center mb-4">
+            <div class="col-md-7 col-lg-6">
+                <div class="card">
+                    <div class="card-body px-4 py-3">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="fw-bold" style="color: var(--primary); font-size: 0.95rem;"> Kuota Seminar</span>
+                            <span id="kuotaLabel" style="font-size: 0.88rem; color: var(--muted);">
+                                Terisi: <strong id="kuotaTerisi">1</strong> / <strong id="kuotaMax">50</strong>
+                            </span>
+                        </div>
+                        <div class="kuota-bar" id="kuotaBarWrapper">
+                            <div class="kuota-fill" id="kuotaFill" style="width: 2%"></div>
+                        </div>
+                        <div id="kuotaStatus" class="mt-1" style="font-size: 0.82rem; ">
+                            Masih tersedia
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-7 col-lg-6">
+                <div class="card">
+                    <div class="card-body px-4 py-4">
+                        <h2 class="fw-bold text-center mb-4" style="color: var(--primary);">
+                            FORM PENDAFTARAN
+                        </h2>
+
+                        <div id="alertKuotaPenuh" class="alert-kuota-full mb-3" style="display:none;">
+                            Maaf, kuota seminar sudah penuh.
+                        </div>
+
+                        <form id="formDaftar" action="#" method="POST">
+                            <div class="mb-4">
+                                <label for="nama" class="form-label">Nama lengkap :</label>
+                                <input type="text" class="form-control" id="nama" name="nama"
+                                    placeholder="Masukkan nama lengkap" required>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="email" class="form-label">Email :</label>
+                                <input type="email" class="form-control" id="email" name="email"
+                                    placeholder="nama@email.com" required>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label">Jenis kelamin :</label>
+                                <div class="d-flex gap-4 mt-1">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio"
+                                            name="jenis_kelamin" id="perempuan" value="perempuan">
+                                        <label class="form-check-label" for="perempuan">Perempuan</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio"
+                                            name="jenis_kelamin" id="laki" value="laki-laki">
+                                        <label class="form-check-label" for="laki">Laki-laki</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="kategori" class="form-label">Kategori Peserta :</label>
+                                <select class="form-select" id="kategori" name="kategori" onchange="hitungHTM()" required>
+                                    <option value="" disabled selected>Pilih kategori</option>
+                                    <option value="mahasiswa">Mahasiswa</option>
+                                    <option value="umum">Umum</option>
+                                </select>
+                            </div>
+                            <div class="text-center mt-4">
+                                <button type="submit" id="btnSubmit" class="btn btn-primary-custom px-5">
+                                    Submit
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card">
+                    <div class="card-body px-4 py-4">
+                        <h2 class="fw-bold text-center mb-4" style="color: var(--primary);">
+                            DATA PESERTA
+                        </h2>
+
+                        <div class="row mb-3">
+                            <div class="col-md-5">
+                                <div class="input-group">
+                                    <span class="input-group-text">Search :</span>
+                                    <input type="text" class="form-control" id="searchInput"
+                                        placeholder="Cari nama peserta" onkeyup="searchTable()">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <div class="table-wrapper">
+                                <table class="table" id="pesertaTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Nama Lengkap</th>
+                                            <th>Email</th>
+                                            <th>Jenis Kelamin</th>
+                                            <th>Kategori</th>
+                                            <th>HTM</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tabelBody">
+                                        <tr>
+                                            <td>Mira Aulia</td>
+                                            <td>Aulia@gmail.com</td>
+                                            <td>Perempuan</td>
+                                            <td>Mahasiswa</td>
+                                            <td>Rp 70.000</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer-bottom">&copy; 2026 Seminarku. teknologi AI</div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
